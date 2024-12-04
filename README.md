@@ -50,6 +50,7 @@
 |   vm     |     4   |
 |   cpu    |     8         |
 | RAM      |   16 Гб       |
+| HDD | 40 Гб |
 | Object Storage| 1 bucket |
 | Cloud function| 1 |
 
