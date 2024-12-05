@@ -84,7 +84,7 @@
     -  ```terraform apply```
 ![изображение](https://github.com/user-attachments/assets/9f9c38a4-a392-4b82-8eac-617bb9643c5f)
 
-Создан сервисный аккаутн для работы с хранилищем
+Создан сервисный аккаунт для работы с хранилищем
 
 ![изображение](https://github.com/user-attachments/assets/5756e9ab-2b43-40a3-984b-c09d472d38f4)
 
