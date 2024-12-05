@@ -21,7 +21,7 @@ resource "yandex_storage_bucket" "terraform-bucket" {
   access_key = yandex_iam_service_account_static_access_key.terraform_service_account_key.access_key
   secret_key = yandex_iam_service_account_static_access_key.terraform_service_account_key.secret_key
 
-  bucket     = var.bucket_name
+  bucket = var.bucket_name
 
   anonymous_access_flags {
     read        = false
