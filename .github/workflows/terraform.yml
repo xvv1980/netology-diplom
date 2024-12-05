@@ -32,7 +32,6 @@ jobs:
        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
        TT: ${{ env.TEST }}
-       TT2: ${{ TEST }}
        TT1: dfdssdfs
       shell: bash
       run: |
