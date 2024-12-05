@@ -4,6 +4,7 @@ terraform {
                    s3 =       "https://storage.yandexcloud.net"
       }
     region = "ru-central1"
+    bucket = "tf-state-xvv1980"
     key = "tf-remote-state-diplom"
     skip_region_validation = true
     skip_credentials_validation = true
