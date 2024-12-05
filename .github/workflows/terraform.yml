@@ -52,14 +52,3 @@ jobs:
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: terraform -chdir=./terraform apply -input=false tfplan
 
-    - name: Terraform Apply (Manual Trigger)
-      if: github.event_name == 'workflow_dispatch' && github.event.inputs.apply == 'true'
-      run: terraform -chdir=./terraform apply -input=false tfplan
-
-    - name: Terraform Destroy (Manual Trigger)
-      if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
-      run: |
-        terraform -chdir=./terraform destroy -input=false -auto-approve \
-        -var="token=${{ secrets.YC_TOKEN }}" \
-        -var="cloud_id=${{ secrets.YC_CLOUD_ID }}" \
-        -var="folder_id=${{ secrets.YC_FOLDER_ID }}"
