@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6ekPNtKKqfsz94cTTkdl61qS5laMpixD+DeOVHrWW xvv@host-15
+package_update: true
+package_upgrade: false
+packages:
+  - curl
+
+runcmd:
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sudo sh ./get-docker.sh
+  - curl --location https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+  - sudo apt-get -y install gitlab-runner
+  - sudo gitlab-runner register --non-interactive --docker-privileged=true --url="https://gitlab.com" --registration-token="glrt-t3_rp1mUvYcPTdaZvNcRZ8a" --executor=docker --tag-list="docker" --docker-image="alpine:latest"
