@@ -99,6 +99,21 @@
    - Проверяем и экспортируем переменные окружения AWS_*_KEY
  ![изображение](https://github.com/user-attachments/assets/c8f75ade-d8e3-4d56-beb2-e9b1fc519317)
 
+   -  ```terraform validate; terraform plan```
+   -  ```terraform apply```
+   - окончательный фрагмент вывода
+   ![изображение](https://github.com/user-attachments/assets/d4c35e17-0330-48bc-bc43-64376168ab62)
+
+
+Созданы виртуальные машины
+
+![изображение](https://github.com/user-attachments/assets/09503926-3e02-4508-ac7a-63b776073cda)
+
+Сохранено состояние инфраструктуры
+
+![изображение](https://github.com/user-attachments/assets/5ccd119f-63c7-4554-aee5-8b7201db2098)
+
+
      
 
 
