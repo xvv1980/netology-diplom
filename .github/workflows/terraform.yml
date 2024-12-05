@@ -32,7 +32,7 @@ jobs:
         terraform_version: "1.8.5"
 
     - name: Terraform Init
-      run: terraform -chdir=./terraform init -backend-config="access_key=${{secrets.AWS_ACCESS_KEY}}" -backend-config="secret_key=${{secrets.AWS_SECRET_KEY}}"
+      run: terraform -chdir=./terraform init -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY }}" -backend-config="secret_key=${{ secrets.AWS_SECRET_KEY }}"
       #run: terraform -chdir=./terraform init
 
     - name: Terraform Format and Validate
