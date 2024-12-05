@@ -76,7 +76,25 @@
 
 Инфраструктура будет работать в двух подсетях в различных зонах доступности. [main.tf](terraform/main.tf)
 
-Убедитесь, что теперь вы можете выполнить команды terraform destroy и terraform apply без дополнительных ручных действий.
+#### Демонстрация работы по развертыванию инфраструктуры
+
+1. Начинаем с создания OBJECT STORAGE для хранения terraform состояния инфраструктуры:
+    -  Входим в каталог [s3-bucket](terraform/s3-bucket)
+    -  ```terraform validate; terraform plan```
+    -  ```terraform apply```
+![изображение](https://github.com/user-attachments/assets/9f9c38a4-a392-4b82-8eac-617bb9643c5f)
+
+Создан сервисный аккаутн для работы с хранилищем
+
+![изображение](https://github.com/user-attachments/assets/5756e9ab-2b43-40a3-984b-c09d472d38f4)
+
+Создан бакет
+
+![изображение](https://github.com/user-attachments/assets/dea860fd-535d-4c56-ba45-2bec113e8077)
+
+
+
+   
 
 
 
