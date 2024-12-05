@@ -32,12 +32,6 @@ jobs:
         terraform_version: "1.8.5"
 
     - name: Terraform Init
-      env:
-       TOKEN: ${{ secrets.YC_TOKEN }}
-       CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
-       FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
-       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       run: terraform -chdir=./terraform init -backend-config="access_key=${{secrets.AWS_ACCESS_KEY}}" -backend-config="secret_key=${{secrets.AWS_SECRET_KEY}}"
       #run: terraform -chdir=./terraform init
 
