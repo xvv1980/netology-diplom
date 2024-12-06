@@ -190,5 +190,54 @@ jobs:
 ### Создание Kubernetes кластера
 
  Создание kubernetes кластера проведем с использование Kubespray. 
- Файл инвентаризации был подготовлен на этапе раветывания инфаструктуры с помошью шаблона.
+
+ `git clone https://github.com/kubernetes-sigs/kubespray.git
+
+  Для моего ALT LInux подошла ветка release-2.24
+  
+  Для разворачивания кластера с помощью kubespray необходим файл инвентаризации, который был подготовлен на этапе раветывания инфаструктуры с помошью шаблона.
+  Данный шаблон применен в манифесте [ansible.tf](terraform/template/hosts.tftpl)
+  
+```
+
+  all:
+  hosts:%{ for idx, master in masters }
+    master:
+      ansible_host: ${master.network_interface[0].nat_ip_address}
+      ip: ${master.network_interface[0].ip_address}
+      access_ip: ${master.network_interface[0].ip_address}%{ endfor }
+  %{ for idx, worker in workers }
+    worker-${idx + 1}:
+      ansible_host: ${worker.network_interface[0].nat_ip_address}
+      ip: ${worker.network_interface[0].ip_address}
+      access_ip: ${worker.network_interface[0].ip_address}%{ endfor }
+  children:
+    kube_control_plane:
+      hosts:%{ for idx, master in masters }
+        ${master.name}:%{ endfor }
+    kube_node:
+      hosts:%{ for idx, worker in workers }
+        ${worker.name}:%{ endfor }
+    etcd:
+      hosts:%{ for idx, master in masters }
+        ${master.name}:%{ endfor }
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+
+Данный шаблон применен в манифесте [ansible.tf](terraform/ansible.tf)
+
+```
+resource "local_file" "hosts_cfg_kubespray" {
+  content  = templatefile("${path.module}/template/hosts.tftpl", {
+    workers = yandex_compute_instance.worker
+    masters = yandex_compute_instance.master
+  })
+  filename = "../kubespray/inventory/xvv1980-diplom/hosts.yaml"
+}
+```
  
