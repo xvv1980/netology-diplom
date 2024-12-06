@@ -279,13 +279,23 @@ all:
       hosts: {}
 ```
  
-Запускаем настройку кластера kubernetes
+ 1. Запускаем настройку кластера kubernetes
 
 ` ansible-playbook -i inventory/xvv1980-diplom/hosts.yaml -u ubuntu --become --become-user=root --private-key=~/.ssh/id_ed25519 -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"' cluster.yml --flush-cache `
 
-Вывод об окончании устновки кластера:
+Вывод об окончании установки кластера:
 
 ![изображение](https://github.com/user-attachments/assets/54530b8b-4527-45b3-8de5-b0122376ce89)
+
+ 2. Настраиваем утилиту kubectl.
+
+Переносим /etc/kubernetes/admin.conf на локальную машину и прописываем в нем ip адреса master ноды.
+
+ 3. Проверка кластера
+
+![изображение](https://github.com/user-attachments/assets/50502c97-a51b-43e3-a45e-713349f59422)
+
+
 
 
 
