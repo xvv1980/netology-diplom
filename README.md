@@ -164,7 +164,15 @@ jobs:
       run: terraform -chdir=./terraform apply -input=false tfplan
    ```
 
-   2. Вносим исправление в манифест из каталога terraform, коммитим.
-   3. Включается в работу workflow.
+   2. Выполняем команду terraform destroy.
+
+  ![изображение](https://github.com/user-attachments/assets/d33aa9e2-651e-4d38-bd88-32dbffc5320f)
+
+   3. Проверяем что нет созданных вирт.машин
+  
+  ![изображение](https://github.com/user-attachments/assets/480cce9e-8df7-449c-bbc9-691e0adebf92)
+
+
+   4.Вносим исправления в манифест из каталога terraform. В результате сработает workflows и развернет инфраструктуру.
 
  Вывод работы workflows:     
