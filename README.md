@@ -240,4 +240,42 @@ resource "local_file" "hosts_cfg_kubespray" {
   filename = "../kubespray/inventory/xvv1980-diplom/hosts.yaml"
 }
 ```
+
+Получившийся инвентраль по текущей инфраструктуре:
+
+```
+
+all:
+  hosts:
+    master:
+      ansible_host: 89.169.128.255
+      ip: 10.0.1.6
+      access_ip: 10.0.1.6
+  
+    worker-1:
+      ansible_host: 158.160.68.117
+      ip: 10.0.2.21
+      access_ip: 10.0.2.21
+    worker-2:
+      ansible_host: 89.169.172.48
+      ip: 10.0.2.29
+      access_ip: 10.0.2.29
+  children:
+    kube_control_plane:
+      hosts:
+        master:
+    kube_node:
+      hosts:
+        worker-1:
+        worker-2:
+    etcd:
+      hosts:
+        master:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
  
