@@ -282,3 +282,10 @@ all:
 Запускаем настройку кластера kubernetes
 
 ` ansible-playbook -i inventory/xvv1980-diplom/hosts.yaml -u ubuntu --become --become-user=root --private-key=~/.ssh/id_ed25519 -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"' cluster.yml --flush-cache `
+
+Вывод об окончании устновки кластера:
+
+![изображение](https://github.com/user-attachments/assets/54530b8b-4527-45b3-8de5-b0122376ce89)
+
+
+
