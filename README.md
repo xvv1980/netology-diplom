@@ -7,6 +7,8 @@
   * [Цели:](#цели)
   * [Этапы выполнения:](#этапы-выполнения)
      * [Создание облачной инфраструктуры](#создание-облачной-инфраструктуры)
+        * [Демонстрация работы по развертыванию инфраструктуры](#демонстрация-работы-по-развертыванию-инфраструктуры)
+        * [Демонстрация работы GITHUB workflows](#демонстрация-работы-github-workflows)
      * [Создание Kubernetes кластера](#создание-kubernetes-кластера)
      * [Создание тестового приложения](#создание-тестового-приложения)
      * [Подготовка cистемы мониторинга и деплой приложения](#подготовка-cистемы-мониторинга-и-деплой-приложения)
@@ -113,7 +115,8 @@
 
 ![изображение](https://github.com/user-attachments/assets/5ccd119f-63c7-4554-aee5-8b7201db2098)
 
-#### Демонстрация работы GITHUB ACTION в репозитории с terraform манифестами инфраструктуры проекта.
+
+#### Демонстрация работы GITHUB workflows
 
 1. Начинаем с создания GITHUB ACTION workfkow. [terraform workflows](.github/workflows/terraform.yaml)
 
@@ -173,6 +176,168 @@ jobs:
   ![изображение](https://github.com/user-attachments/assets/480cce9e-8df7-449c-bbc9-691e0adebf92)
 
 
-   4.Вносим исправления в манифест из каталога terraform. В результате сработает workflows и развернет инфраструктуру.
+   4.Вносим исправления в манифест из каталога terraform. 
 
- Вывод работы workflows:     
+   ![изображение](https://github.com/user-attachments/assets/676c3c06-47e2-42ca-96c3-0557a0c2ae67)
+
+   
+   В результате сработает workflows и развернет инфраструктуру.
+ ![изображение](https://github.com/user-attachments/assets/c390c252-54a6-41ab-8fba-18ab1a7e20ad)
+
+   5. Проверяем наличие созданных вирт. машин
+ ![изображение](https://github.com/user-attachments/assets/702c6405-bb11-4d30-a742-55145110f328)
+
+### Создание Kubernetes кластера
+
+ Создание kubernetes кластера проведем с использование Kubespray. 
+
+ `git clone https://github.com/kubernetes-sigs/kubespray.git
+
+  Для моего ALT LInux подошла ветка release-2.24
+  
+  Для разворачивания кластера с помощью kubespray необходим файл инвентаризации, который был подготовлен на этапе раветывания инфаструктуры с помошью шаблона.
+  Данный шаблон применен в манифесте [hosts.tftpl](terraform/template/hosts.tftpl)
+  
+```
+
+  all:
+  hosts:%{ for idx, master in masters }
+    master:
+      ansible_host: ${master.network_interface[0].nat_ip_address}
+      ip: ${master.network_interface[0].ip_address}
+      access_ip: ${master.network_interface[0].ip_address}%{ endfor }
+  %{ for idx, worker in workers }
+    worker-${idx + 1}:
+      ansible_host: ${worker.network_interface[0].nat_ip_address}
+      ip: ${worker.network_interface[0].ip_address}
+      access_ip: ${worker.network_interface[0].ip_address}%{ endfor }
+  children:
+    kube_control_plane:
+      hosts:%{ for idx, master in masters }
+        ${master.name}:%{ endfor }
+    kube_node:
+      hosts:%{ for idx, worker in workers }
+        ${worker.name}:%{ endfor }
+    etcd:
+      hosts:%{ for idx, master in masters }
+        ${master.name}:%{ endfor }
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+
+Данный шаблон применен в манифесте [ansible.tf](terraform/ansible.tf)
+
+```
+resource "local_file" "hosts_cfg_kubespray" {
+  content  = templatefile("${path.module}/template/hosts.tftpl", {
+    workers = yandex_compute_instance.worker
+    masters = yandex_compute_instance.master
+  })
+  filename = "../kubespray/inventory/xvv1980-diplom/hosts.yaml"
+}
+```
+
+Получившийся инвентарь по текущей инфраструктуре:
+
+```
+
+all:
+  hosts:
+    master:
+      ansible_host: 89.169.128.255
+      ip: 10.0.1.6
+      access_ip: 10.0.1.6
+  
+    worker-1:
+      ansible_host: 158.160.68.117
+      ip: 10.0.2.21
+      access_ip: 10.0.2.21
+    worker-2:
+      ansible_host: 89.169.172.48
+      ip: 10.0.2.29
+      access_ip: 10.0.2.29
+  children:
+    kube_control_plane:
+      hosts:
+        master:
+    kube_node:
+      hosts:
+        worker-1:
+        worker-2:
+    etcd:
+      hosts:
+        master:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+ 
+ 1. Запускаем настройку кластера kubernetes
+
+` ansible-playbook -i inventory/xvv1980-diplom/hosts.yaml -u ubuntu --become --become-user=root --private-key=~/.ssh/id_ed25519 -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"' cluster.yml --flush-cache `
+
+Вывод об окончании установки кластера:
+
+![изображение](https://github.com/user-attachments/assets/54530b8b-4527-45b3-8de5-b0122376ce89)
+
+ 2. Настраиваем утилиту kubectl.
+
+Переносим /etc/kubernetes/admin.conf на локальную машину и прописываем в нем ip адреса master ноды.
+
+ 3. Проверка кластера
+
+![изображение](https://github.com/user-attachments/assets/dee429d1-1ffb-4827-8289-b0cae288e064)
+
+
+### Создание тестового приложения
+
+ 1. Приложение будет состоять из статического html файла, который показывает различные картинки в зависимости от того какая версия приложения + произвольный текст определнный разработчиком.
+
+ -app
+      - image1.jpg
+      - image2.jpg
+      - index.html
+ 
+ 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться в Yandex Container Registry.(cr.yandex)
+    
+ 3. Логинимся к Container Registry
+
+    `echo <TOKEN> | docker login --username iam --password-stdin cr.yandex`
+    
+ 4. Создаем реестр в котором будут храниться образы:
+    
+    В репозиторий добавлен файл [yandex_registry.tf](terraform/yandex_registry.tf)
+
+        ` terraform apply`
+
+    Результат:
+    
+   ![изображение](https://github.com/user-attachments/assets/e1d6575c-a739-4077-8a3d-4c68a61db36b)
+
+
+ 6. Собираем образ c указанием id реестра
+        
+    `docker build -t cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1 .`
+
+ 7. Загружаем в реестр
+    
+    `sudo docker push cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1`
+
+ 8. Проверяем наличие образа в реесте
+    
+   ![изображение](https://github.com/user-attachments/assets/9a664ce6-9972-4428-968e-5bb2c515171f)
+
+
+    
+
+
+
+
+
