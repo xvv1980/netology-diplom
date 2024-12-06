@@ -300,10 +300,10 @@ all:
 
  1. Приложение будет состоять из статического html файла, который показывает различные картинки в зависимости от того какая версия приложения + произвольный текст определнный разработчиком.
 
- --app
-      -- image1.jpg
-      -- image2.jpg
-      -- index.html
+ -app
+      - image1.jpg
+      - image2.jpg
+      - index.html
  
  2. Приложение будет упаковано в docker образ diplom. Образ будет храниться в Yandex Container Registry.(cr.yandex)
     
@@ -312,18 +312,28 @@ all:
     `echo <TOKEN> | docker login --username iam --password-stdin cr.yandex`
     
  4. Создаем реестр в котором будут храниться образы:
-    ![изображение](https://github.com/user-attachments/assets/16025348-59d6-484e-96e5-626d1f52dbe3)
-
- 5. Собираем образ c указанием id реестра
-        
-    `docker build -t cr.yandex/crpdleds96ormhhg92nb/diplom:0.1 .`
-
- 6. Загружаем в реестр
     
-    `sudo docker push cr.yandex/crpdleds96ormhhg92nb/diplom:0.1`
+    В репозиторий добавлен файл [yandex_registry.tf](terraform/yandex_registry.tf)
 
- 7. Проверяем наличие образа в реесте
-    ![изображение](https://github.com/user-attachments/assets/c4626d3e-e2bc-43d2-b3f4-8d9849de3e11)
+        ` terraform apply`
+
+    Результат:
+    
+   ![изображение](https://github.com/user-attachments/assets/e1d6575c-a739-4077-8a3d-4c68a61db36b)
+
+
+ 6. Собираем образ c указанием id реестра
+        
+    `docker build -t cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1 .`
+
+ 7. Загружаем в реестр
+    
+    `sudo docker push cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1`
+
+ 8. Проверяем наличие образа в реесте
+    
+   ![изображение](https://github.com/user-attachments/assets/9a664ce6-9972-4428-968e-5bb2c515171f)
+
 
     
 
