@@ -149,4 +149,22 @@ jobs:
        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 ``` 
 
-     
+  Будут выполнены основые terraform команды: init, plan, apply. Команда plan подготовит инфратсруктуру в файл tfplan и передаст его на вход команды apply.
+
+  ```
+ - name: Terraform Plan
+      run: |
+        terraform -chdir=./terraform plan -input=false -out=tfplan \
+        -var="token=${{ secrets.YC_TOKEN }}" \
+        -var="cloud_id=${{ secrets.YC_CLOUD_ID }}" \
+        -var="folder_id=${{ secrets.YC_FOLDER_ID }}" \
+
+    - name: Terraform Apply (Automatic Trigger)
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: terraform -chdir=./terraform apply -input=false tfplan
+   ```
+
+   2. Вносим исправление в манифест из каталога terraform, коммитим.
+   3. Включается в работу workflow.
+
+ Вывод работы workflows:     
