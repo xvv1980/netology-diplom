@@ -321,6 +321,10 @@ all:
  6. Загружаем в реестр
     
     `sudo docker push cr.yandex/crpdleds96ormhhg92nb/diplom:0.1`
+
+ 7. Проверяем наличие образа в реесте
+    ![изображение](https://github.com/user-attachments/assets/c4626d3e-e2bc-43d2-b3f4-8d9849de3e11)
+
     
 
 
