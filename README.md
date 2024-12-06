@@ -301,11 +301,29 @@ all:
  1. Приложение будет состоять из статического html файла, который показывает различные картинки в зависимости от того какая версия приложения + произвольный текст определнный разработчиком.
 
  --app
-    -- image1.jpg
-    -- image2.jpg
-    -- index.html
+      -- image1.jpg
+      -- image2.jpg
+      -- index.html
  
- 2. Приложение будет упаковано в docker образ xvv1980/diplom
+ 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться в Yandex Container Registry.(cr.yandex)
+    
+ 3. Логинимся к Container Registry
+
+    `echo <TOKEN> | docker login --username iam --password-stdin cr.yandex`
+    
+ 4. Создаем реестр в котором будут храниться образы:
+    ![изображение](https://github.com/user-attachments/assets/16025348-59d6-484e-96e5-626d1f52dbe3)
+
+ 5. Собираем образ c указанием id реестра
+        
+    `docker build -t cr.yandex/crpdleds96ormhhg92nb/diplom:0.1 .`
+
+ 6. Загружаем в реестр
+    
+    `sudo docker push cr.yandex/crpdleds96ormhhg92nb/diplom:0.1`
+    
+
+
 
 
 
