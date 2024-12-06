@@ -113,14 +113,42 @@
 
 ![изображение](https://github.com/user-attachments/assets/5ccd119f-63c7-4554-aee5-8b7201db2098)
 
+#### Демонстрация работы GITHUB ACTION в репозитории с terraform манифестами инфраструктуры проекта.
 
-     
+1. Начинаем с создания GITHUB ACTION workfkow. [terraform workflows](.github/workflows/terraform.yaml)
 
-
-
+   Отслеживать будем изменения в ветке main в файлах каталога terraform:
    
+```
+ on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+```
+
+   В переменых GITHUB репозитория описываем секреты:
+
+![изображение](https://github.com/user-attachments/assets/37c89a44-638e-4de3-aaee-d2a3b8851030)
 
 
+  Пробрасывааем в окружение внутри workflows:
 
+```
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    env:
+       TOKEN: ${{ secrets.YC_TOKEN }}
+       CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
+       FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+``` 
 
      
