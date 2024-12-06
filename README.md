@@ -293,7 +293,8 @@ all:
 
  3. Проверка кластера
 
-![изображение](https://github.com/user-attachments/assets/50502c97-a51b-43e3-a45e-713349f59422)
+![изображение](https://github.com/user-attachments/assets/dee429d1-1ffb-4827-8289-b0cae288e064)
+
 
 
 
