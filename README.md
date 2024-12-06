@@ -279,3 +279,6 @@ all:
       hosts: {}
 ```
  
+Запускаем настройку кластера kubernetes
+
+` ansible-playbook -i inventory/xvv1980-diplom/hosts.yaml -u ubuntu --become --become-user=root --private-key=~/.ssh/id_ed25519 -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"' cluster.yml --flush-cache `
