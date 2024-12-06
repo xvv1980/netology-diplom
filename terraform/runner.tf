@@ -56,7 +56,7 @@ resource "yandex_compute_instance" "runner" {
   }
 
   network_interface {
-    subnet_id          = yandex_vpc_subnet.diplom-subnet-a.id
+    subnet_id          = yandex_vpc_subnet.diplom-subnet-b.id
     nat                = true
   }
 
