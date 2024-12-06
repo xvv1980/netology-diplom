@@ -173,6 +173,15 @@ jobs:
   ![изображение](https://github.com/user-attachments/assets/480cce9e-8df7-449c-bbc9-691e0adebf92)
 
 
-   4.Вносим исправления в манифест из каталога terraform. В результате сработает workflows и развернет инфраструктуру.
+   4.Вносим исправления в манифест из каталога terraform. 
 
- Вывод работы workflows:     
+   ![изображение](https://github.com/user-attachments/assets/676c3c06-47e2-42ca-96c3-0557a0c2ae67)
+
+   
+   В результате сработает workflows и развернет инфраструктуру.
+ ![изображение](https://github.com/user-attachments/assets/c390c252-54a6-41ab-8fba-18ab1a7e20ad)
+
+   5. Проверяем наличие созданных вирт. машин
+ ![изображение](https://github.com/user-attachments/assets/702c6405-bb11-4d30-a742-55145110f328)
+
+
