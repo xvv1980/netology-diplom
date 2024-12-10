@@ -300,39 +300,38 @@ all:
 
  1. Приложение будет состоять из статического html файла, который показывает различные картинки в зависимости от того какая версия приложения + произвольный текст определнный разработчиком.
 
- -app
-      - image1.jpg
-      - image2.jpg
-      - index.html
+- app
+  - image1.jpg
+  - image2.jpg
+  - index.html
  
- 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться в Yandex Container Registry.(cr.yandex)
+ 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться на Docker HUB ресурсе.
     
- 3. Логинимся к Container Registry
+ 3. Логинимся к Docker hub
 
-    `echo <TOKEN> | docker login --username iam --password-stdin cr.yandex`
+    `docker login -u xvv1980`
     
- 4. Создаем реестр в котором будут храниться образы:
-    
-    В репозиторий добавлен файл [yandex_registry.tf](terraform/yandex_registry.tf)
-
-        ` terraform apply`
-
-    Результат:
-    
-   ![изображение](https://github.com/user-attachments/assets/e1d6575c-a739-4077-8a3d-4c68a61db36b)
-
-
- 6. Собираем образ c указанием id реестра
+ 4. Собираем образ c указанием id реестра
         
-    `docker build -t cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1 .`
+    ![изображение](https://github.com/user-attachments/assets/49dee863-d67c-4c76-8b43-a079b877bbb9)
 
- 7. Загружаем в реестр
-    
-    `sudo docker push cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1`
 
- 8. Проверяем наличие образа в реесте
+ 5. Проверем наличие на локальной машине
     
-   ![изображение](https://github.com/user-attachments/assets/9a664ce6-9972-4428-968e-5bb2c515171f)
+    ![изображение](https://github.com/user-attachments/assets/cebc33fa-4a6e-4751-8245-f9b23c67a4f2)
+
+
+ 6. Загружаем в хранилище
+
+    ![изображение](https://github.com/user-attachments/assets/10a3fda1-3c0a-488d-bc4e-0bbf4c852329)
+
+ 7. Смотрим в web интерфейсе docker hub
+
+     ![изображение](https://github.com/user-attachments/assets/173d156d-2785-41dd-947c-ae121fcfee3a)
+
+
+    
+
 
   
   ### Подготовка cистемы мониторинга и деплой приложения
