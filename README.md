@@ -444,6 +444,15 @@ all:
 
      Сливаем ветку в основную, затем присваиваем тег.
 
+      Видим что доступен следующий шаг - deploy.
+      
+     ![изображение](https://github.com/user-attachments/assets/e708b554-279b-4316-ac61-a684785e3bf7)
+
+      Вручную запускаем deploy.
+
+      ![изображение](https://github.com/user-attachments/assets/68a1acd4-dc8a-454b-80c3-f158421d780a)
+
+
       
 
 
