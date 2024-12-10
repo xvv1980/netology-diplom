@@ -379,7 +379,18 @@ all:
 
      ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
 
-  6. Проверяем работу в браузере
+  6. Применяем манифест INGRESS для реализации перенаправления к тому или иному сервису
+
+     ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
+
+   
+  9. Проверяем работу в браузере Grafana
+
+     ![изображение](https://github.com/user-attachments/assets/73ba390d-20b7-4618-bce7-9f3c83a54162)
+
+  10. Проверяем работу в браузере тестового приложения(версия 0.1 без картинок)
+
+      ![изображение](https://github.com/user-attachments/assets/ade9ca0c-bf20-402f-81eb-d414e7bbec98)
 
      
 
