@@ -347,7 +347,7 @@ all:
 
  1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были укзаны на этапе создания network load balancer, например 30050
 
-    [ingress-nginx-values.yaml](diplom-app/helm_values/ingress-nginx-values.yaml)
+    [ingress-nginx-values.yaml](k8s-manifest/helm-values/ingress-nginx-value.yaml)
     ```
      nodePorts:
       # -- Node port allocated for the external HTTP listener. If left empty, the service controller allocates one from the configured node port range.
@@ -369,17 +369,19 @@ all:
 
   3. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
 
+     [Deployment.yaml](k8s-manifest/deployment.yaml),  [Service.yaml](k8s-manifest/service.yaml)
+     
      ![изображение](https://github.com/user-attachments/assets/e436e076-bc10-4561-a516-107c080b4070)
 
-  4. Проверем установленные приложения
+  5. Проверем установленные приложения
 
      ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
 
-  5. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
+  6. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
      ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
 
-  6. Применяем манифест [INGRESS](diplom-app) для реализации перенаправления к тому или иному сервису
+  7. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
 
      ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
 
@@ -392,11 +394,36 @@ all:
 
       ![изображение](https://github.com/user-attachments/assets/ade9ca0c-bf20-402f-81eb-d414e7bbec98)
 
-     
 
+  ### Установка и настройка CI/CD
 
-     
+ 1. Для CI/CD процессов воспользуемся системой от GITLAB. 
+  Создан проект https://gitlab.com/netology7085248/diplom.git.
+  
+  ![изображение](https://github.com/user-attachments/assets/2e449af8-37bc-4710-8b54-26418b10760d)
 
+  В проекте присутствуют:
+- файлы приложения app/
+  -  index.html и картинки
+-  Dockerfile для сборки образа из предыдущих шагов
+-  Манифесты для деплоя в к8s кластер manifest/
+
+ 2. Для запуска процессов CI/CD нужен запущенный и зарегистрированный GITLAB Runner.
+
+    Для этой цели поднята отдельная ВМ runner-1. При ее создании был передан [cloud-config](terraform/cloud-init/runner-meta.yaml) в котором есть команды установки необходимого программного обеспечения и регистрации на gitlab.
+
+    Проверяем что runner зарегистрирован.
+    
+    ![изображение](https://github.com/user-attachments/assets/5f978720-e700-4459-87fc-bffe3e2fe9f8)
+
+  3. Процесс сборки будет осуществляться с использованием пакета buildah в шаге **build_image**.
+
+     Логика заложена такая, что если при коммите указывается тег, то в docker репозиторий загрузится образ с указанным тегом, а также и с тегом latest.
+     Если тега нет, то загрузится образ с тегом ввиде короткого значения коммита.
+
+  4. Процесс развертывания будет запускаться только в том случае, когда в репозитории фиксируется коммит с тегом и в ветку main.
+
+  
 
   
 
