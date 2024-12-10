@@ -363,6 +363,23 @@ all:
 
     ![изображение](https://github.com/user-attachments/assets/d6d36160-91e7-4fc1-82ab-69f0f330cda7)
 
+  2. Устанавливаем систему мониторинга, сбора метрик.
+
+     ![изображение](https://github.com/user-attachments/assets/5d6d500d-55d5-4f3b-ac50-acc54f815db1)
+
+  3. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем испольшовать только CI/CD GITLAB.
+
+     ![изображение](https://github.com/user-attachments/assets/e436e076-bc10-4561-a516-107c080b4070)
+
+  4. Проверем устновленные приложения
+
+     ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
+     
+
+
+     
+
+
   
 
 
