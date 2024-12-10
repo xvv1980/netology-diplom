@@ -300,39 +300,105 @@ all:
 
  1. Приложение будет состоять из статического html файла, который показывает различные картинки в зависимости от того какая версия приложения + произвольный текст определнный разработчиком.
 
- -app
-      - image1.jpg
-      - image2.jpg
-      - index.html
+- app
+  - image1.jpg
+  - image2.jpg
+  - index.html
  
- 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться в Yandex Container Registry.(cr.yandex)
+ 2. Приложение будет упаковано в docker образ diplom. Образ будет храниться на Docker HUB ресурсе.
     
- 3. Логинимся к Container Registry
+ 3. Логинимся к Docker hub
 
-    `echo <TOKEN> | docker login --username iam --password-stdin cr.yandex`
+    `docker login -u xvv1980`
     
- 4. Создаем реестр в котором будут храниться образы:
-    
-    В репозиторий добавлен файл [yandex_registry.tf](terraform/yandex_registry.tf)
-
-        ` terraform apply`
-
-    Результат:
-    
-   ![изображение](https://github.com/user-attachments/assets/e1d6575c-a739-4077-8a3d-4c68a61db36b)
-
-
- 6. Собираем образ c указанием id реестра
+ 4. Собираем образ c указанием id реестра
         
-    `docker build -t cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1 .`
+    ![изображение](https://github.com/user-attachments/assets/49dee863-d67c-4c76-8b43-a079b877bbb9)
 
- 7. Загружаем в реестр
-    
-    `sudo docker push cr.yandex/crpmrcu3cvp6e4u50fdv/diplom:0.1`
 
- 8. Проверяем наличие образа в реесте
+ 5. Проверем наличие на локальной машине
     
-   ![изображение](https://github.com/user-attachments/assets/9a664ce6-9972-4428-968e-5bb2c515171f)
+    ![изображение](https://github.com/user-attachments/assets/cebc33fa-4a6e-4751-8245-f9b23c67a4f2)
+
+
+ 6. Загружаем в хранилище
+
+    ![изображение](https://github.com/user-attachments/assets/10a3fda1-3c0a-488d-bc4e-0bbf4c852329)
+
+ 7. Смотрим в web интерфейсе docker hub
+
+     ![изображение](https://github.com/user-attachments/assets/173d156d-2785-41dd-947c-ae121fcfee3a)
+
+
+    
+  
+  ### Подготовка cистемы мониторинга и деплой приложения
+
+  
+ - Систему мониторинга будем устанавливать с помощью диспетчера пакетов для kubernetes - HELM.
+  
+ - Первоначальный деплой приложения проведем путем применения манифестов с помощью утилиты kubectl.
+
+ - Для выполнения требования , которое говорит о том, что система мониторинга и тестовое приложение должны отвечать на одном порту 80, организуем связку Network Load Balancer
+  и ingress контроллера.
+
+ - Будем использовать ingress контроллер nginx. Ingress-nginx установим посредством HELM.
+  
+
+ 1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были укзаны на этапе создания network load balancer, например 30050
+
+    [ingress-nginx-values.yaml](ingress-nginx-values.yaml)
+    ```
+     nodePorts:
+      # -- Node port allocated for the external HTTP listener. If left empty, the service controller allocates one from the configured node port range.
+      http: "30050"
+      # -- Node port allocated for the external HTTPS listener. If left empty, the service controller allocates one from the configured node port range.
+      https: "30051"
+      # -- Node port mapping for external TCP listeners. If left empty, the service controller allocates them from the configured node port range.
+    ```
+
+    ![изображение](https://github.com/user-attachments/assets/1301d168-5d0a-440e-a298-563cc6da6430)
+
+    Проверяем сетевые настройки и установленные порты:
+
+    ![изображение](https://github.com/user-attachments/assets/d6d36160-91e7-4fc1-82ab-69f0f330cda7)
+
+  2. Устанавливаем систему мониторинга, сбора метрик.
+
+     ![изображение](https://github.com/user-attachments/assets/5d6d500d-55d5-4f3b-ac50-acc54f815db1)
+
+  3. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
+
+     ![изображение](https://github.com/user-attachments/assets/e436e076-bc10-4561-a516-107c080b4070)
+
+  4. Проверем установленные приложения
+
+     ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
+
+  5. Проверяем что Network Load Balancer создан на тпредыдущих шагах и пройдена проверка состояния
+
+     ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
+
+  6. Применяем манифест INGRESS для реализации перенаправления к тому или иному сервису
+
+     ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
+
+   
+  9. Проверяем работу в браузере Grafana
+
+     ![изображение](https://github.com/user-attachments/assets/73ba390d-20b7-4618-bce7-9f3c83a54162)
+
+  10. Проверяем работу в браузере тестового приложения(версия 0.1 без картинок)
+
+      ![изображение](https://github.com/user-attachments/assets/ade9ca0c-bf20-402f-81eb-d414e7bbec98)
+
+     
+
+
+     
+
+
+  
 
 
     
