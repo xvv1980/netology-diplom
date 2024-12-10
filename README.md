@@ -369,17 +369,19 @@ all:
 
   3. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
 
+     [Deployment.yaml](k8s-manifest/deployment.yaml),  [Service.yaml](k8s-manifest/service.yaml)
+     
      ![изображение](https://github.com/user-attachments/assets/e436e076-bc10-4561-a516-107c080b4070)
 
-  4. Проверем установленные приложения
+  5. Проверем установленные приложения
 
      ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
 
-  5. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
+  6. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
      ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
 
-  6. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
+  7. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
 
      ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
 
