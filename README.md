@@ -392,11 +392,16 @@ all:
 
       ![изображение](https://github.com/user-attachments/assets/ade9ca0c-bf20-402f-81eb-d414e7bbec98)
 
-     
 
+  ### Установка и настройка CI/CD
 
-     
+  Для CI/CD процессов воспользуемся системой от GITLAB. 
+  Создан проект https://gitlab.com/netology7085248/diplom.git.
+  
+  ![изображение](https://github.com/user-attachments/assets/2e449af8-37bc-4710-8b54-26418b10760d)
 
+  В проекте присутствуют файлы приложения index.html и картинки, а также Dockerfile для сборки образа из предыдущих шагов.
+  
 
   
 
