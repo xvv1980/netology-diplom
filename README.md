@@ -347,7 +347,7 @@ all:
 
  1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были укзаны на этапе создания network load balancer, например 30050
 
-    [ingress-nginx-values.yaml](ingress-nginx-values.yaml)
+    [ingress-nginx-values.yaml](diplom-app/helm_values/ingress-nginx-values.yaml)
     ```
      nodePorts:
       # -- Node port allocated for the external HTTP listener. If left empty, the service controller allocates one from the configured node port range.
@@ -375,11 +375,11 @@ all:
 
      ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
 
-  5. Проверяем что Network Load Balancer создан на тпредыдущих шагах и пройдена проверка состояния
+  5. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
      ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
 
-  6. Применяем манифест INGRESS для реализации перенаправления к тому или иному сервису
+  6. Применяем манифест [INGRESS](diplom-app) для реализации перенаправления к тому или иному сервису
 
      ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
 
