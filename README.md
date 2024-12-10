@@ -335,16 +335,33 @@ all:
   ### Подготовка cистемы мониторинга и деплой приложения
 
   
-  Систему мониторинга будем устанавливать с помощью диспетчера пакетов для kubernetes - HELM.
+ - Систему мониторинга будем устанавливать с помощью диспетчера пакетов для kubernetes - HELM.
   
-  Первоначальный деплой приложения проведем путем применения манифестов с помощью утилиты kubectl.
+ - Первоначальный деплой приложения проведем путем применения манифестов с помощью утилиты kubectl.
 
-  Для выполнения требования , которое говорит о том, что система мониторинга и тестовое приложение должны отвечать на одном порту 80, организуем связку Network Load Balancer
+ - Для выполнения требования , которое говорит о том, что система мониторинга и тестовое приложение должны отвечать на одном порту 80, организуем связку Network Load Balancer
   и ingress контроллера.
 
-  Будем использовать ingress контроллер nginx. Ingress-nginx установим посредством HELM.
+ - Будем использовать ingress контроллер nginx. Ingress-nginx установим посредством HELM.
   
- 
+
+ 1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были укзаны на этапе создания network load balancer, например 30050
+
+    [ingress-nginx-values.yaml](ingress-nginx-values.yaml)
+    ```
+     nodePorts:
+      # -- Node port allocated for the external HTTP listener. If left empty, the service controller allocates one from the configured node port range.
+      http: "30050"
+      # -- Node port allocated for the external HTTPS listener. If left empty, the service controller allocates one from the configured node port range.
+      https: "30051"
+      # -- Node port mapping for external TCP listeners. If left empty, the service controller allocates them from the configured node port range.
+    ```
+
+    ![изображение](https://github.com/user-attachments/assets/1301d168-5d0a-440e-a298-563cc6da6430)
+
+    Проверяем сетевые настройки и установленные порты:
+
+    ![изображение](https://github.com/user-attachments/assets/d6d36160-91e7-4fc1-82ab-69f0f330cda7)
 
   
 
