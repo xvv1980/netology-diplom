@@ -403,19 +403,26 @@ grafana.ini:
 
   4. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
 
-     [Deployment](cicd-gitlab-example/manifest/deploy.yaml),  [Service.yaml](cicd-gitlab-example/manifest/service.yaml)
-     
-    
+     [Deployment](cicd-gitlab-example/manifest/deploy.yaml), [Service](cicd-gitlab-example/manifest/service.yaml), [Ingress](cicd-gitlab-example/manifest/ingress.yaml)
 
-  5. Проверем установленные приложения
+     Мониторинг
+     
+    ![изображение](https://github.com/user-attachments/assets/8b70b342-a93f-4be2-adcd-014c75cc35f5)
+
+    Тестовое приложение
+
+    ![изображение](https://github.com/user-attachments/assets/5b5f1589-985a-45d0-8488-4c6ca9e39791)
+
+
+  6. Проверем установленные приложения
 
      ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
 
-  6. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
+  7. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
      ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
 
-  7. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
+  8. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
 
      ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
 
