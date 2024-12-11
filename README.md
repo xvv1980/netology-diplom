@@ -477,17 +477,15 @@ grafana.ini:
 
 
 
-   3. Делаем новую ветку с выводом рисунка версии 1.1
+   3. 
    
-    Аналогично, коммит не в основную и без тега, поэтому видим только один шаг - build.
-    
-      ![изображение](https://github.com/user-attachments/assets/bd1cdb57-c2d3-4bcb-84ca-635848ebace7)
-
+ 
      Сливаем ветку в основную, затем присваиваем тег.
 
       Видим что доступен следующий шаг - deploy.
       
-     ![изображение](https://github.com/user-attachments/assets/e708b554-279b-4316-ac61-a684785e3bf7)
+   ![изображение](https://github.com/user-attachments/assets/1534565d-f225-43a9-b3b4-d02b3d1d5432)
+
 
       Вручную запускаем deploy.
 
