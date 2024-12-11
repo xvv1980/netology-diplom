@@ -19,38 +19,6 @@ build_image:
      - test ! -z "${CI_COMMIT_TAG}" &&  buildah push  "${DOCKER_REGISTRY_USER}/${DOCKER_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${DOCKER_REGISTRY_USER}/${DOCKER_REGISTRY_IMAGE}:latest"
      - buildah images
 
-deploy_test:
-  stage: deploy
-  image: 
-     name: bitnami/kubectl:latest
-     entrypoint: [""]
-  tags:
-    - docker
-  only:
-    - branches
-  except: 
-    - main
-    - tags
-  variables:
-    IMAGE: ${DOCKER_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}
-  script:
-    - echo "Deploying to Kubernetes..."
-    - export KUBECONFIG=${KUBER_CONFIG}
-    - echo "Deploying image..."
-    - echo ${IMAGE}
-    - cd manifest/
-    - sed -i "s/__VERSION__/${DOCKER_REGISTRY_USER}\/${IMAGE}/" deploy.yaml service.yaml
-    - |
-      if kubectl apply -f deploy.yaml | grep -q unchanged; then
-          echo "=> Patching deployment to force image update."
-          kubectl patch -f deploy.yaml -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"ci-last-updated\":\"$(date +'%s')\"}}}}}"
-      else
-          echo "=> Deployment apply has changed the object, no need to force image update."
-      fi
-    - kubectl apply -f service.yaml
-    - kubectl rollout status -f deploy.yaml
-    - kubectl get all 
-
 
 deploy:
   stage: deploy
@@ -60,12 +28,13 @@ deploy:
   tags:
     - docker
   only:
-    - main
-    - tags
+     - main
+     - tags
   when: manual
   variables:
     IMAGE: ${DOCKER_REGISTRY_IMAGE}:${VERSION}
   script:
+    - echo ${CI_COMMIT_TAG}
     - echo "Deploying to Kubernetes..."
     - export KUBECONFIG=${KUBER_CONFIG}
     - echo "Deploying image..."
@@ -80,5 +49,6 @@ deploy:
           echo "=> Deployment apply has changed the object, no need to force image update."
       fi
     - kubectl apply -f service.yaml
+    - kubectl apply -f ingress.yaml
     - kubectl rollout status -f deploy.yaml
     - kubectl get all
