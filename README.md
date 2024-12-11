@@ -477,19 +477,16 @@ grafana.ini:
 
 
 
-   3. 
-   
- 
-     Сливаем ветку в основную, затем присваиваем тег.
+   3. Сливаем ветку в основную, затем присваиваем тег.
 
-      Видим что доступен следующий шаг - deploy.
+   Видим что доступен следующий шаг - deploy.
       
    ![изображение](https://github.com/user-attachments/assets/1534565d-f225-43a9-b3b4-d02b3d1d5432)
 
+   Вручную запускаем deploy.
 
-      Вручную запускаем deploy.
+   ![изображение](https://github.com/user-attachments/assets/e7244d89-0f8b-49e7-90f6-6f583d5850ff)
 
-      ![изображение](https://github.com/user-attachments/assets/68a1acd4-dc8a-454b-80c3-f158421d780a)
 
 
       
