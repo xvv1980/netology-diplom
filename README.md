@@ -341,10 +341,19 @@ all:
 
  - Для выполнения требования , которое говорит о том, что система мониторинга и тестовое приложение должны отвечать на одном порту 80, организуем связку Network Load Balancer и ingress контроллера.
 
+   Схема маршрутизации запроса:
+   
+   --> ip network load balancer --> ingress-controller > ingress-app --> service-app
+
+   http:// ip network load balancer/              <-- на тестовое приложение
+   
+   http:// ip network load balancer/grafana       <-- на систему мониторинга.
+
+
  - Будем использовать ingress контроллер nginx. Ingress-nginx установим посредством HELM.
   
 
- 1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были указаны на этапе создания network load balancer, например 30050
+ 1. Устанавливаем ingress-controller NGINX, определяем заранее конкретные NodePort-ы которые поднимает контроллер. Эти порты были указаны на этапе создания network load balancer, например 30050. Вносим изменения в файл helm value для тонкой настройки приложения.
 
     [ingress-nginx-values.yaml](k8s-manifest/helm-values/ingress-nginx-value.yaml)
     ```
@@ -362,15 +371,36 @@ all:
 
     ![изображение](https://github.com/user-attachments/assets/d6d36160-91e7-4fc1-82ab-69f0f330cda7)
 
-  2. Устанавливаем систему мониторинга, сбора метрик.
+  2. Устанавливаем систему мониторинга, сбора метрик.(PROMETHEUS-GRAFANA-ALERTMANAGER)
 
-     ![изображение](https://github.com/user-attachments/assets/5d6d500d-55d5-4f3b-ac50-acc54f815db1)
+     Чтобы корректно работала схема с grafana нужно будет переопределить конфигурацию по умолчанию через в  [monitoring-values.yaml](k8s-manifest/helm-values/monitoring-values.yaml)
+     ```
+     ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
 
-  3. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
+  path: /grafana/?(.*)
+  hosts:
+    - k8s.example.dev
 
-     [Deployment.yaml](k8s-manifest/deployment.yaml),  [Service.yaml](k8s-manifest/service.yaml)
+grafana.ini:
+  server:
+    root_url: http://localhost:3000/grafana
+    ```
+
+    Т.е. нужно включить в helm чарт-е возможность настройки своего ingress. 
      
-     ![изображение](https://github.com/user-attachments/assets/e436e076-bc10-4561-a516-107c080b4070)
+     ![изображение](https://github.com/user-attachments/assets/9239207c-a7f3-4ea9-9b18-23fb3b7549ad)
+    
+
+  4. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
+
+     [Deployment](cicd-gitlab-example/manifest/deploy.yaml),  [Service.yaml](cicd-gitlab-example/manifest/service.yaml)
+     
+    
 
   5. Проверем установленные приложения
 
