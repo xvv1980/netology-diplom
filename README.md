@@ -349,6 +349,9 @@ all:
    
    http:// ip network load balancer/grafana       <-- на систему мониторинга.
 
+   В итоге будет два ingress объекта. Один будет установлен при установке helm  PROMETHEUS-GRAFANA-ALERTMANAGER, а другой для тестового приложения мы поднимем сами.
+   ingress будут находиться в разных namespace-ах.
+
 
  - Будем использовать ingress контроллер nginx. Ingress-nginx установим посредством HELM.
   
@@ -374,8 +377,8 @@ all:
   2. Устанавливаем систему мониторинга, сбора метрик.(PROMETHEUS-GRAFANA-ALERTMANAGER)
 
      Чтобы корректно работала схема с grafana нужно будет переопределить конфигурацию по умолчанию через в  [monitoring-values.yaml](k8s-manifest/helm-values/monitoring-values.yaml)
-     
-     ```
+
+```     
      ingress:
   enabled: true
   annotations:
@@ -390,11 +393,12 @@ all:
 grafana.ini:
   server:
     root_url: http://localhost:3000/grafana
-    ```
 
-    Т.е. нужно включить в helm чарт-е возможность настройки своего ingress. 
-     
-     ![изображение](https://github.com/user-attachments/assets/9239207c-a7f3-4ea9-9b18-23fb3b7549ad)
+```
+
+   Т.е. нужно включить в helm чарт-е возможность настройки своего ingress. 
+    
+  ![изображение](https://github.com/user-attachments/assets/9239207c-a7f3-4ea9-9b18-23fb3b7549ad)
     
 
   4. Устанавливаем тестовое приложение с локальной машины для проверки деплоя в целом, в дальнейшем будем использовать только CI/CD GITLAB.
