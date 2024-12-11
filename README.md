@@ -492,6 +492,11 @@ grafana.ini:
 
    ![изображение](https://github.com/user-attachments/assets/fb6470ad-a00e-487d-92d9-8e76ea71aac3)
 
+   Активность pod в GRAFANA
+
+   ![изображение](https://github.com/user-attachments/assets/0b29f671-d809-44d3-9ec9-364e3a00aa63)
+
+
 
 
 
