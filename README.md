@@ -374,6 +374,7 @@ all:
   2. Устанавливаем систему мониторинга, сбора метрик.(PROMETHEUS-GRAFANA-ALERTMANAGER)
 
      Чтобы корректно работала схема с grafana нужно будет переопределить конфигурацию по умолчанию через в  [monitoring-values.yaml](k8s-manifest/helm-values/monitoring-values.yaml)
+     
      ```
      ingress:
   enabled: true
