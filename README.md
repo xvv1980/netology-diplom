@@ -405,6 +405,8 @@ grafana.ini:
 
      [Deployment](cicd-gitlab-example/manifest/deploy.yaml), [Service](cicd-gitlab-example/manifest/service.yaml), [Ingress](cicd-gitlab-example/manifest/ingress.yaml)
 
+  5. Проверем установленные приложения
+
      Мониторинг
      
     ![изображение](https://github.com/user-attachments/assets/8b70b342-a93f-4be2-adcd-014c75cc35f5)
@@ -413,27 +415,19 @@ grafana.ini:
 
     ![изображение](https://github.com/user-attachments/assets/5b5f1589-985a-45d0-8488-4c6ca9e39791)
 
+  6. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
-  6. Проверем установленные приложения
-
-     ![изображение](https://github.com/user-attachments/assets/98bc2131-86af-425a-95a2-a3e5637fd23d)
-
-  7. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
-
-     ![изображение](https://github.com/user-attachments/assets/74483de5-52e1-4125-b29d-b6b696952b1f)
-
-  8. Применяем манифест [INGRESS](k8s-manifest/ingress.yaml) для реализации перенаправления к тому или иному сервису
-
-     ![изображение](https://github.com/user-attachments/assets/46ee0241-1831-434f-a3ce-a41978f2722d)
+     ![изображение](https://github.com/user-attachments/assets/bbd3346a-e45d-4299-b093-66f4ce1b588c)
 
    
-  9. Проверяем работу в браузере Grafana
+  7. Проверяем работу в браузере Grafana
 
-     ![изображение](https://github.com/user-attachments/assets/73ba390d-20b7-4618-bce7-9f3c83a54162)
+    ![изображение](https://github.com/user-attachments/assets/4ef8dcfd-851b-4d28-946d-e2b91b4808fc)
 
-  10. Проверяем работу в браузере тестового приложения(версия 0.1 без картинок)
+  8. Проверяем работу в браузере тестового приложения(версия 1.1)
 
-      ![изображение](https://github.com/user-attachments/assets/ade9ca0c-bf20-402f-81eb-d414e7bbec98)
+     ![изображение](https://github.com/user-attachments/assets/177de343-494f-4fdb-ba22-5e923c7acd71)
+
 
 
   ### Установка и настройка CI/CD
