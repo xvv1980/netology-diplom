@@ -484,6 +484,11 @@ grafana.ini:
 
    ![изображение](https://github.com/user-attachments/assets/e7244d89-0f8b-49e7-90f6-6f583d5850ff)
 
+   В docker hub репозитории появился образ с тегом latest. Значит коммит был с тегом. Также имеется образ и с цифоровам тегом.
+   
+   ![изображение](https://github.com/user-attachments/assets/bde7d122-4cca-4c4e-a39b-c7a05a2563b9)
+
+
    В итоге видим страницу с новой версией
 
    ![изображение](https://github.com/user-attachments/assets/fb6470ad-a00e-487d-92d9-8e76ea71aac3)
