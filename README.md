@@ -407,13 +407,11 @@ grafana.ini:
 
   5. Проверем установленные приложения
 
-     Мониторинг
-     
-    ![изображение](https://github.com/user-attachments/assets/8b70b342-a93f-4be2-adcd-014c75cc35f5)
+Мониторинг
+     ![изображение](https://github.com/user-attachments/assets/8b70b342-a93f-4be2-adcd-014c75cc35f5)
 
     Тестовое приложение
-
-    ![изображение](https://github.com/user-attachments/assets/5b5f1589-985a-45d0-8488-4c6ca9e39791)
+   ![изображение](https://github.com/user-attachments/assets/5b5f1589-985a-45d0-8488-4c6ca9e39791)
 
   6. Проверяем что [Network Load Balancer](terraform/lb.tf) создан на предыдущих шагах и пройдена проверка состояния
 
@@ -422,7 +420,7 @@ grafana.ini:
    
   7. Проверяем работу в браузере Grafana
 
-    ![изображение](https://github.com/user-attachments/assets/4ef8dcfd-851b-4d28-946d-e2b91b4808fc)
+   ![изображение](https://github.com/user-attachments/assets/4ef8dcfd-851b-4d28-946d-e2b91b4808fc)
 
   8. Проверяем работу в браузере тестового приложения(версия 1.1)
 
