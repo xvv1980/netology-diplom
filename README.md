@@ -487,6 +487,11 @@ grafana.ini:
 
    ![изображение](https://github.com/user-attachments/assets/e7244d89-0f8b-49e7-90f6-6f583d5850ff)
 
+   В итоге видим страницу с новой версией
+
+   ![изображение](https://github.com/user-attachments/assets/fb6470ad-a00e-487d-92d9-8e76ea71aac3)
+
+
 
 
       
